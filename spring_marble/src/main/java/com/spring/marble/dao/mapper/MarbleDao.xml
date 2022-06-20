@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.marble.dao.MarbleDao">
+	<insert id="joinMemberDao">
+		INSERT INTO member (id, password, email) VALUES(#{param1}, #{param2}, #{param3})
+	</insert>
+	
+	<insert id="joinDiceDao">
+		INSERT INTO diceresult (id) VALUES(#{param1})
+	</insert>
+	
+	<select id="loginDao" resultType="com.spring.marble.dto.MemberVO">
+		SELECT * FROM member WHERE id = #{param1}
+	</select>
+	
+	<select id="listDao" resultType="com.spring.marble.dto.UserParam">
+		SELECT * FROM diceresult ORDER BY dicesum DESC
+	</select>
+	
+	<select id="selectOneById" resultType="com.spring.marble.dto.UserParam">
+		SELECT * FROM diceresult WHERE id = #{param1}
+	</select>
+	
+	<update id="updateDao" parameterType="java.util.Map">
+		UPDATE diceresult SET dicesum = dicesum + ${diceNumber}, dicecount = dicecount + 1, roundnum = #{roundNum} WHERE id = #{id}
+	</update>
+</mapper>
