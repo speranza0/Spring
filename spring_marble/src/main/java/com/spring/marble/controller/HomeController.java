@@ -2,9 +2,7 @@ package com.spring.marble.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,13 +13,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.marble.dao.MarbleDao;
 import com.spring.marble.dto.JoinParam;
+import com.spring.marble.dto.LoginParam;
 import com.spring.marble.dto.MemberVO;
+import com.spring.marble.dto.UserParam;
+import com.spring.marble.excrption.LoginException;
+import com.spring.marble.service.MableService;
 
 /**
  * Handles requests for the application home page.
@@ -30,6 +34,9 @@ import com.spring.marble.dto.MemberVO;
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	@Autowired
+	private MableService marbleService;
 	
 	@Autowired
 	private SqlSession sqlSession;
@@ -60,13 +67,10 @@ public class HomeController {
 		return "/join";
 	}
 	
-	@RequestMapping("/join")
-	public String join(HttpServletRequest request, Model model) {
-		MarbleDao dao = sqlSession.getMapper(MarbleDao.class);
-		dao.joinMemberDao(request.getParameter("id"), request.getParameter("password"), request.getParameter("email"));
-		dao.joinDiceDao(request.getParameter("id"));
-		JoinParam param = new JoinParam(request.getParameter("id"), request.getParameter("password"), request.getParameter("email"));
-		model.addAttribute("user", param);
+	@RequestMapping(value="/join", method = RequestMethod.POST)
+	public String join(@ModelAttribute JoinParam param, Model model) {
+		MemberVO member = marbleService.join(param);
+		model.addAttribute("user", member);
 		return "welcome";
 	}
 	
@@ -80,12 +84,18 @@ public class HomeController {
 		return "/login";
 	}
 	@RequestMapping("/login")
-	public String login(HttpServletRequest request, Model model) {
-		MarbleDao dao = sqlSession.getMapper(MarbleDao.class);
-		MemberVO member = dao.loginDao(request.getParameter("id"), request.getParameter("password"));
- 		HttpSession session = request.getSession();
- 		session.setAttribute("user", member);
-		return "redirect:main";
+	public String login(@ModelAttribute LoginParam param, HttpServletRequest request,  Model model) {		
+		
+		try {
+			MemberVO member = marbleService.login(param);
+			HttpSession session = request.getSession();
+	 		session.setAttribute("user", member);
+			return "redirect:main";
+		} catch (LoginException e) {
+			model.addAttribute("error", e.getMessage());
+			return "/login";
+		}
+		
 	}
 	
 	@RequestMapping("/marble")
@@ -94,16 +104,10 @@ public class HomeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(HttpServletRequest request, Model model) {
-		MarbleDao dao = sqlSession.getMapper(MarbleDao.class);
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("id", request.getParameter("id"));
-		param.put("diceNumber", request.getParameter("diceNumber"));
-		param.put("roundNum", request.getParameter("roundNum"));
-		dao.updateDao(param);
-		
-		return "";
+	@RequestMapping(value="/update", method=RequestMethod.POST)
+	public String update(@RequestBody UserParam param) {
+		marbleService.update(param);
+		return "update success";
 	}
 	
 	@RequestMapping("/list")

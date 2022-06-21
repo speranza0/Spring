@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.spring.marble.dao.MarbleDao">
-	<insert id="joinMemberDao">
-		INSERT INTO member (id, password, email) VALUES(#{param1}, #{param2}, #{param3})
+	<insert id="joinMemberDao" parameterType="com.spring.marble.dto.JoinParam">
+		INSERT INTO member (id, password, email) VALUES(#{id}, #{password}, #{email})
 	</insert>
 	
 	<insert id="joinDiceDao">
@@ -22,7 +22,7 @@
 		SELECT * FROM diceresult WHERE id = #{param1}
 	</select>
 	
-	<update id="updateDao" parameterType="java.util.Map">
-		UPDATE diceresult SET dicesum = dicesum + ${diceNumber}, dicecount = dicecount + 1, roundnum = #{roundNum} WHERE id = #{id}
+	<update id="updateDao" parameterType="com.spring.marble.dto.UserParam">
+		UPDATE diceresult SET dicesum = #{dicesum}, dicecount = #{dicecount}, roundnum = #{roundnum} WHERE id = #{id}
 	</update>
 </mapper>

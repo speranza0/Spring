@@ -2,51 +2,92 @@ package com.spring.marble.dto;
 
 public class UserParam {
 	private String id;
-	private int dicesum;
-	private int dicecount;
-	private int roundnum;
-	private float avg;
+	private Integer dicesum;
+	private Integer dicecount;
+	private Integer roundnum;
+	private Float avg;
+
+	
 	
 	public UserParam() {
 	}
-	
-	public UserParam(String id, int dicesum, int dicecount, int roundnum) {
+
+	public UserParam(String id, Integer dicesum, Integer roundnum) {
+		this.id = id;
+		this.dicesum = dicesum;
+		this.roundnum = roundnum;
+	}
+
+
+
+	public UserParam(String id, Integer dicesum, Integer dicecount, Integer roundnum, Float avg) {
 		this.id = id;
 		this.dicesum = dicesum;
 		this.dicecount = dicecount;
 		this.roundnum = roundnum;
-		this.avg = dicesum / (float)dicecount;
+		this.avg = avg;
 	}
-	
+
+
+
 	public String getId() {
 		return id;
 	}
+
+
+
 	public void setId(String id) {
 		this.id = id;
 	}
-	public int getDicesum() {
+
+
+
+	public Integer getDicesum() {
 		return dicesum;
 	}
-	public void setDicesum(int dicesum) {
+
+
+
+	public void setDicesum(Integer dicesum) {
 		this.dicesum = dicesum;
 	}
-	public int getDicecount() {
+
+
+
+	public Integer getDicecount() {
 		return dicecount;
 	}
-	public void setDicecount(int dicecount) {
+
+
+
+	public void setDicecount(Integer dicecount) {
 		this.dicecount = dicecount;
 	}
-	public int getRoundnum() {
+
+
+
+	public Integer getRoundnum() {
 		return roundnum;
 	}
-	public void setRoundnum(int roundnum) {
+
+
+
+	public void setRoundnum(Integer roundnum) {
 		this.roundnum = roundnum;
 	}
-	public float getAvg() {
+
+
+
+	public Float getAvg() {
 		return avg;
 	}
 
-	public void setAvg(float avg) {
+
+
+	public void setAvg(Float avg) {
 		this.avg = avg;
 	}
+
+	
+	
 }
