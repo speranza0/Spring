@@ -125,9 +125,11 @@ $(".shuffle").on("click", function () {
   $.ajax({
 	type:'POST',
 	url: path + "/update",
-	data: {id : id,
-		diceNumber : res,
-		roundNum : roundNum},
+	dataType : "json", 
+	contentType: "application/json",
+	data: JSON.stringify({id : id,
+		dicesum : res,
+		roundnum : roundNum}),
 	success:function(){
 		console.log(res);
 		console.log(clickCount);

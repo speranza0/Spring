@@ -28,8 +28,8 @@
 					<input type="submit" class="btn btn-primary form-control" value="로그인">
 				</form>
 			</div>
-			<c:if test="${not empty errorMessage}">
-			로그인 오류 : ${errorMessage}
+			<c:if test="${not empty error}">
+			로그인 오류 : ${error}
 			</c:if>
 		</div>
 		<div class="col-lg-4"></div>

@@ -31,11 +31,16 @@
 					<c:set var ="i" value="${i+1}" />
 						<tr>
 							<td>${i}</td>
-							<td>${fn:substring(rank.id, 0, 3)}</td>
+							<td>${rank.id}</td>
 							<td>${rank.dicesum}</td>
 							<td>${rank.dicecount}</td>
 							<td>${rank.roundnum}</td>
-							<td><fmt:formatNumber value="${rank.dicesum / rank.dicecount}" pattern=".00" /></td>
+							<td>
+							<c:if test="${rank.dicesum eq 0}">0</c:if>
+							<c:if test="${rank.dicesum ne 0}">
+								<fmt:formatNumber value="${rank.dicesum / rank.dicecount}" pattern=".00" />
+							</c:if>
+							</td>
 						</tr>
 					</c:forEach>
 					</tbody>
