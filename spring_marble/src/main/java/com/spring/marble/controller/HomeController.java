@@ -24,7 +24,7 @@ import com.spring.marble.dto.JoinParam;
 import com.spring.marble.dto.LoginParam;
 import com.spring.marble.dto.MemberVO;
 import com.spring.marble.dto.UserParam;
-import com.spring.marble.excrption.LoginException;
+import com.spring.marble.exception.LoginException;
 import com.spring.marble.service.MableService;
 
 /**

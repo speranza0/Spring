@@ -1,4 +1,4 @@
-package com.spring.marble.excrption;
+package com.spring.marble.exception;
 
 public class LoginException extends RuntimeException {
 	public LoginException(String message) {

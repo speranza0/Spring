@@ -1,7 +1,5 @@
 package com.spring.marble.service;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +10,7 @@ import com.spring.marble.dto.JoinParam;
 import com.spring.marble.dto.LoginParam;
 import com.spring.marble.dto.MemberVO;
 import com.spring.marble.dto.UserParam;
-import com.spring.marble.excrption.LoginException;
+import com.spring.marble.exception.LoginException;
 
 @Service
 public class MableService {
